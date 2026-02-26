@@ -60,7 +60,7 @@ struct StoreProductModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onChange(of: selectedApp) { _, newValue in
+            .onChange(of: selectedApp) { newValue in
                 if let app = newValue {
                     coordinator.present(appID: app.id)
                     selectedApp = nil
