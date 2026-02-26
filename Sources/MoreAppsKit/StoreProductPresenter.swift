@@ -3,71 +3,68 @@ import SwiftUI
 #if canImport(StoreKit) && os(iOS)
 import StoreKit
 
-/// Presents an App Store product page inside the app using SKStoreProductViewController.
-struct StoreProductPresenter: UIViewControllerRepresentable {
-    let appID: Int
-    let onDismiss: () -> Void
+@MainActor
+final class StoreProductCoordinator: NSObject, SKStoreProductViewControllerDelegate, ObservableObject {
+    @Published var isLoading = false
+    private var storeVC: SKStoreProductViewController?
 
-    func makeUIViewController(context: Context) -> UIViewController {
-        let host = UIViewController()
-        host.view.backgroundColor = .clear
-        return host
-    }
-
-    func updateUIViewController(_ host: UIViewController, context: Context) {
-        guard host.presentedViewController == nil,
-              !context.coordinator.isPresenting else { return }
-        context.coordinator.isPresenting = true
+    func present(appID: Int) {
+        guard !isLoading else { return }
+        isLoading = true
 
         let store = SKStoreProductViewController()
-        store.delegate = context.coordinator
+        store.delegate = self
+        self.storeVC = store
 
         store.loadProduct(withParameters: [
             SKStoreProductParameterITunesItemIdentifier: appID
-        ]) { success, _ in
+        ]) { [weak self] success, _ in
             DispatchQueue.main.async {
-                if success {
-                    host.present(store, animated: true)
+                guard let self else { return }
+                if success, let presenter = self.topViewController() {
+                    presenter.present(store, animated: true) {
+                        self.isLoading = false
+                    }
                 } else {
-                    context.coordinator.isPresenting = false
-                    onDismiss()
+                    self.isLoading = false
+                    self.storeVC = nil
                 }
             }
         }
     }
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onDismiss: onDismiss)
+    nonisolated func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        DispatchQueue.main.async {
+            viewController.dismiss(animated: true)
+        }
     }
 
-    final class Coordinator: NSObject, SKStoreProductViewControllerDelegate {
-        let onDismiss: () -> Void
-        var isPresenting = false
-
-        init(onDismiss: @escaping () -> Void) {
-            self.onDismiss = onDismiss
+    private func topViewController() -> UIViewController? {
+        guard let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive }),
+              let root = scene.keyWindow?.rootViewController else {
+            return nil
         }
-
-        func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-            viewController.dismiss(animated: true) { [weak self] in
-                self?.isPresenting = false
-                self?.onDismiss()
-            }
+        var top = root
+        while let presented = top.presentedViewController {
+            top = presented
         }
+        return top
     }
 }
 
-/// A ViewModifier that presents SKStoreProductViewController as a fullScreenCover.
 struct StoreProductModifier: ViewModifier {
     @Binding var selectedApp: MoreApp?
+    @StateObject private var coordinator = StoreProductCoordinator()
 
     func body(content: Content) -> some View {
         content
-            .fullScreenCover(item: $selectedApp) { app in
-                StoreProductPresenter(appID: app.id) {
+            .onChange(of: selectedApp) { _, newValue in
+                if let app = newValue {
+                    coordinator.present(appID: app.id)
                     selectedApp = nil
                 }
-                .ignoresSafeArea()
             }
     }
 }
