@@ -3,3 +3,5 @@
 "rate" = "Beoordeel";
 "search_apps" = "Zoek apps";
 "free" = "Gratis";
+"load_failed" = "Laden mislukt";
+"retry" = "Opnieuw proberen";

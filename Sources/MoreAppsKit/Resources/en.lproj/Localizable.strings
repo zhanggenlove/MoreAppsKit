@@ -3,3 +3,5 @@
 "rate" = "Rate";
 "search_apps" = "Search apps";
 "free" = "Free";
+"load_failed" = "Failed to load";
+"retry" = "Retry";

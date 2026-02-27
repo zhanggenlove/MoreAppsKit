@@ -3,3 +3,5 @@
 "rate" = "Oceń";
 "search_apps" = "Szukaj aplikacji";
 "free" = "Bezpłatne";
+"load_failed" = "Nie udało się załadować";
+"retry" = "Ponów";

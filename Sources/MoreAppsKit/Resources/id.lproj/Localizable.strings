@@ -3,3 +3,5 @@
 "rate" = "Beri Nilai";
 "search_apps" = "Cari aplikasi";
 "free" = "Gratis";
+"load_failed" = "Gagal memuat";
+"retry" = "Coba lagi";

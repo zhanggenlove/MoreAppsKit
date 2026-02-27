@@ -3,3 +3,5 @@
 "rate" = "Értékelés";
 "search_apps" = "Alkalmazások keresése";
 "free" = "Ingyenes";
+"load_failed" = "Betöltés sikertelen";
+"retry" = "Újrapróbálkozás";

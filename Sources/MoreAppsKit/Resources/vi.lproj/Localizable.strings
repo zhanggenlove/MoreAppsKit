@@ -3,3 +3,5 @@
 "rate" = "Đánh giá";
 "search_apps" = "Tìm ứng dụng";
 "free" = "Miễn phí";
+"load_failed" = "Tải thất bại";
+"retry" = "Thử lại";

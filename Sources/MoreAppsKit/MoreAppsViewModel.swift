@@ -18,11 +18,28 @@ final class MoreAppsViewModel: ObservableObject {
     private let fetcher = AppStoreFetcher()
     private let cache = AppCache.shared
 
+    private static let maxRetries = 3
+    private static let retryDelays: [UInt64] = [2, 4, 8]
+
     private var didLoad = false
+    private var retryCount = 0
+    private var retryTask: Task<Void, Never>?
 
     func loadIfNeeded() {
         guard !didLoad, !isLoading else { return }
+        retryCount = 0
+        performLoad()
+    }
 
+    func retry() {
+        retryTask?.cancel()
+        retryCount = 0
+        didLoad = false
+        hasError = false
+        performLoad()
+    }
+
+    private func performLoad() {
         guard let config = MoreAppsKit.currentConfig else {
             hasError = true
             return
@@ -39,24 +56,39 @@ final class MoreAppsViewModel: ObservableObject {
         isLoading = true
         hasError = false
 
-        Task {
+        retryTask = Task {
             do {
                 let result = try await fetcher.fetchApps(
                     developerID: config.developerID,
                     country: country,
                     regionFallback: config.regionFallback
                 )
+                guard !Task.isCancelled else { return }
                 cache.save(apps: result, developerID: config.developerID, country: country)
                 partition(result, config: config)
+                self.isLoading = false
+                self.didLoad = true
             } catch {
+                guard !Task.isCancelled else { return }
+
                 if let stale = cache.loadStale(developerID: config.developerID) {
                     partition(stale, config: config)
+                    self.isLoading = false
+                    self.didLoad = true
+                    return
+                }
+
+                if retryCount < Self.maxRetries {
+                    let delay = Self.retryDelays[min(retryCount, Self.retryDelays.count - 1)]
+                    retryCount += 1
+                    try? await Task.sleep(nanoseconds: delay * 1_000_000_000)
+                    guard !Task.isCancelled else { return }
+                    performLoad()
                 } else {
                     self.hasError = true
+                    self.isLoading = false
                 }
             }
-            self.isLoading = false
-            self.didLoad = true
         }
     }
 

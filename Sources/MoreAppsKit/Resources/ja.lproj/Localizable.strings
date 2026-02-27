@@ -3,3 +3,5 @@
 "rate" = "評価";
 "search_apps" = "Appを検索";
 "free" = "無料";
+"load_failed" = "読み込みに失敗しました";
+"retry" = "再試行";

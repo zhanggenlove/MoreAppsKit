@@ -3,3 +3,5 @@
 "rate" = "評分";
 "search_apps" = "搜尋 App";
 "free" = "免費";
+"load_failed" = "載入失敗";
+"retry" = "重試";

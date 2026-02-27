@@ -3,3 +3,5 @@
 "rate" = "Vurder";
 "search_apps" = "Søk etter apper";
 "free" = "Gratis";
+"load_failed" = "Kunne ikke laste";
+"retry" = "Prøv igjen";

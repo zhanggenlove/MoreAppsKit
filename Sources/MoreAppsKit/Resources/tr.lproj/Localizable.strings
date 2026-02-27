@@ -3,3 +3,5 @@
 "rate" = "Puanla";
 "search_apps" = "Uygulama ara";
 "free" = "Ücretsiz";
+"load_failed" = "Yüklenemedi";
+"retry" = "Tekrar dene";

@@ -46,7 +46,7 @@ public struct MoreAppsView: View {
         } else if !viewModel.otherApps.isEmpty || viewModel.currentApp != nil {
             mainContent
         } else if viewModel.hasError {
-            EmptyView()
+            errorSection
         } else {
             loadingSection
         }
@@ -60,6 +60,26 @@ public struct MoreAppsView: View {
                 Spacer()
             }
             .padding(.vertical, 8)
+        }
+    }
+
+    private var errorSection: some View {
+        Section(header: Text(headerTitle)) {
+            VStack(spacing: 10) {
+                Text(L10n.loadFailed)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Button {
+                    viewModel.retry()
+                } label: {
+                    Label(L10n.retry, systemImage: "arrow.clockwise")
+                        .font(.subheadline.weight(.medium))
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(.accentColor)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
         }
     }
 

@@ -3,3 +3,5 @@
 "rate" = "Arvostele";
 "search_apps" = "Etsi sovelluksia";
 "free" = "Ilmainen";
+"load_failed" = "Lataus epäonnistui";
+"retry" = "Yritä uudelleen";

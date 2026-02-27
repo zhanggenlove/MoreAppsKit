@@ -3,3 +3,5 @@
 "rate" = "Ocijeni";
 "search_apps" = "Pretraži aplikacije";
 "free" = "Besplatno";
+"load_failed" = "Učitavanje neuspješno";
+"retry" = "Pokušaj ponovo";

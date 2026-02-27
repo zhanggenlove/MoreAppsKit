@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MoreAppsKit'
-  s.version      = '1.0.0'
+  s.version      = '1.1.0'
   s.summary      = 'A lightweight, zero-maintenance Swift library for cross-promoting your iOS/macOS apps.'
   s.description  = <<-DESC
     MoreAppsKit automatically fetches localized app information from the App Store

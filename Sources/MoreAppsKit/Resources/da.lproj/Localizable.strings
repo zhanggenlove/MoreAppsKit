@@ -3,3 +3,5 @@
 "rate" = "Bedøm";
 "search_apps" = "Søg efter apps";
 "free" = "Gratis";
+"load_failed" = "Indlæsning mislykkedes";
+"retry" = "Prøv igen";

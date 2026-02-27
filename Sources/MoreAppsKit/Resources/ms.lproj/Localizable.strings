@@ -3,3 +3,5 @@
 "rate" = "Nilai";
 "search_apps" = "Cari aplikasi";
 "free" = "Percuma";
+"load_failed" = "Gagal memuatkan";
+"retry" = "Cuba lagi";

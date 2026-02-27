@@ -3,3 +3,5 @@
 "rate" = "Betygsätt";
 "search_apps" = "Sök appar";
 "free" = "Gratis";
+"load_failed" = "Kunde inte ladda";
+"retry" = "Försök igen";

@@ -3,3 +3,5 @@
 "rate" = "Noter";
 "search_apps" = "Rechercher des apps";
 "free" = "Gratuit";
+"load_failed" = "Échec du chargement";
+"retry" = "Réessayer";

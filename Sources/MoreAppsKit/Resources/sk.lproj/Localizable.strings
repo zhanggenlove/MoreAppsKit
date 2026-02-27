@@ -3,3 +3,5 @@
 "rate" = "Hodnotiť";
 "search_apps" = "Hľadať aplikácie";
 "free" = "Zadarmo";
+"load_failed" = "Načítanie zlyhalo";
+"retry" = "Skúsiť znova";

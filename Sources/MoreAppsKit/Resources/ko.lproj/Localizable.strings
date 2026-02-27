@@ -3,3 +3,5 @@
 "rate" = "평가";
 "search_apps" = "앱 검색";
 "free" = "무료";
+"load_failed" = "로드 실패";
+"retry" = "다시 시도";

@@ -3,3 +3,5 @@
 "rate" = "评分";
 "search_apps" = "搜索 App";
 "free" = "免费";
+"load_failed" = "加载失败";
+"retry" = "重试";

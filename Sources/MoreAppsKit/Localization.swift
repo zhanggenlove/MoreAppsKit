@@ -6,4 +6,6 @@ enum L10n {
     static let rate = NSLocalizedString("rate", bundle: .module, comment: "")
     static let searchApps = NSLocalizedString("search_apps", bundle: .module, comment: "")
     static let free = NSLocalizedString("free", bundle: .module, comment: "")
+    static let loadFailed = NSLocalizedString("load_failed", bundle: .module, comment: "")
+    static let retry = NSLocalizedString("retry", bundle: .module, comment: "")
 }
